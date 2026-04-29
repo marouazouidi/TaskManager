@@ -1,4 +1,4 @@
-    <aside class="w-64 bg-white shadow-lg p-5">
+    <aside class="w-64 bg-white shadow-lg p-5 fixed top-16 left-0 w-64 h-screen bg-white shadow">
         <h1 class="text-2xl font-bold mb-6">Tasks App</h1>
 
         <nav class="space-y-3">

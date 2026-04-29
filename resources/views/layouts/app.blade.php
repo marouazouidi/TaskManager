@@ -12,7 +12,7 @@
 
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 ">
 
 <div class="flex flex-col min-h-screen">
 
@@ -22,7 +22,7 @@
 
         @include('layouts.sidebar')
 
-        <main class="flex-1 p-6">
+        <main class="flex-1 ml-64 mt-20 p-6">
             @yield('content')
         </main>
 
