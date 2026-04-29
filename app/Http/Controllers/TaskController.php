@@ -26,8 +26,14 @@ class TaskController extends Controller
             $tasks->where('status', $request->status);
         }
 
+        $counts = [
+            'Todo'        => Task::where('user_id', Auth::id())->where('status', 'Todo')->count(),
+            'in progress' => Task::where('user_id', Auth::id())->where('status', 'in progress')->count(),
+            'done'        => Task::where('user_id', Auth::id())->where('status', 'done')->count(),
+        ];
+
         $tasks = $tasks->paginate(8);
-        return view('tasks.index', compact('tasks', 'categories'));
+        return view('tasks.index', compact('tasks', 'categories', 'counts'));
     }
 
     /**
@@ -48,7 +54,7 @@ class TaskController extends Controller
             'title' => ['required|string|max:255'],
             'description' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
-            'status' => ['required', 'in:Todo, In Progress, Done']
+            'status' => ['required', 'in:Todo,in progress,done']
         ]);
 
         $validated['user_id'] =  Auth::id();
@@ -84,7 +90,7 @@ class TaskController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
-            'status' => ['required', 'in:Todo, In Progress, Done']
+            'status' => ['required', 'in:Todo,in progress,done']
         ]);
 
         $task->update($validated);
