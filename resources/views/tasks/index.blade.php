@@ -139,16 +139,13 @@
 
                             <td>
                                 @if($task->due_date)
-                                    <span class="{{ $task->due_date->isPast() && $task->status !== 'done' ? 'task-overdue' : '' }}">
-                                        {{ $task->due_date->format('d/m/Y') }}
-                                        {{-- @if($task->due_date->isPast() && $task->status !== 'done')
-                                        ⚠️
-                                        @endif --}}
-                                    </span>
-                                @else
-                                    <span class="text-muted">—</span>
+                                <span
+                                style="{{ ($task->due_date->isPast() && $task->status !== 'done') ? 'color:red;font-weight:bold;' : '' }}">
+                                {{ $task->due_date->format('d/m/Y') }}
+                                </span>
                                 @endif
                             </td>
+                            
 
 
                             <td class="space-x-2">

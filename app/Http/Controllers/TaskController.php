@@ -18,6 +18,7 @@ class TaskController extends Controller
 
         $tasks = Task::query()->where('user_id', Auth::id());
 
+
         if ($request->filled('category_id')) {
             $tasks->where('category_id', $request->category_id);
         }
@@ -35,6 +36,7 @@ class TaskController extends Controller
 
         $tasks = $tasks->latest()->Paginate(8);
         return view('tasks.index', compact('tasks', 'categories', 'counts'));
+        
     }
 
     /**
@@ -78,6 +80,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        if ($task->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('tasks.edit', compact('task', 'categories'));
@@ -88,6 +94,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        if ($task->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -106,6 +116,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        if ($task->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
