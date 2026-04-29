@@ -1,5 +1,4 @@
-<nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between">
-
+<nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between fixed top-0 left-0 w-full bg-white shadow z-50">
     <div>
         <a href="{{ route('tasks.index') }}" :active="request()->routeIs('tasks.index')" class="text-xl font-bold">Task Manager</a>
         
