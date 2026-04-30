@@ -12,7 +12,7 @@
 
 </head>
 
-<body class="bg-gray-100 ">
+<body class="bg-gray-100 " style="background-color: #faf3fcff;">
 
 <div class="flex flex-col min-h-screen">
 
