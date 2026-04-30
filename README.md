@@ -1,59 +1,232 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📋 TaskManager — Application de Gestion de Tâches Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application web développée avec Laravel permettant à chaque employé de gérer ses tâches personnelles. Chaque utilisateur dispose d'un espace isolé : il ne voit que ses propres tâches.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Fonctionnalités
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Authentification** : inscription, connexion, déconnexion sécurisée
+- **CRUD complet** : créer, lire, modifier, supprimer des tâches
+- **Changement de statut rapide** : directement depuis la liste, sans ouvrir le formulaire
+- **Filtrage** : par statut (à faire / en cours / terminé) et par catégorie
+- **Isolation des données** : un utilisateur ne peut jamais voir ou modifier les tâches d'un autre
+- **Compteur de tâches** par statut affiché sur le dashboard *(bonus)*
+- **Date d'échéance** avec alerte visuelle rouge si dépassée *(bonus)*
+- **Pagination** : 8 tâches par page *(bonus)*
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Stack Technique
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+| Technologie | Version |
+|-------------|---------|
+| PHP | >= 8.1 |
+| Laravel | 10.x |
+| MySQL / MariaDB | — |
+| Bootstrap | 5.3 |
+| Laravel Debugbar | dev only |
+| Laravel Telescope | dev only |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ⚙️ Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Pré-requis
 
-### Premium Partners
+- PHP >= 8.1
+- Composer
+- MySQL ou MariaDB
+- Git
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Étapes
 
-## Contributing
+```bash
+# 1. Cloner le projet
+git clone https://github.com/ton-repo/taskmanager.git
+cd taskmanager
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 2. Installer les dépendances PHP
+composer install
 
-## Code of Conduct
+# 3. Copier le fichier de configuration
+cp .env.example .env
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 4. Générer la clé d'application Laravel
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+### Configuration de la base de données
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Dans le fichier `.env`, modifier ces lignes :
 
-## License
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=taskmanager
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Créer la base de données dans MySQL :
+
+```sql
+CREATE DATABASE taskmanager;
+```
+
+### Lancer les migrations et les seeders
+
+```bash
+# Crée toutes les tables + insère les données de test
+php artisan migrate --seed
+```
+
+### Installer les outils de debugging (développement)
+
+```bash
+# Laravel Debugbar — panneau SQL en bas de page
+composer require barryvdh/laravel-debugbar --dev
+
+# Laravel Telescope — interface d'analyse sur /telescope
+composer require laravel/telescope --dev
+php artisan telescope:install
+php artisan migrate
+```
+
+### Démarrer le serveur
+
+```bash
+php artisan serve
+```
+
+Accéder à l'application : **http://localhost:8000**
+
+---
+
+## 👤 Compte de test
+
+Créé automatiquement par le seeder :
+
+| Champ | Valeur |
+|-------|--------|
+| Email | test@example.com |
+| Mot de passe | password |
+
+---
+
+## 📁 Structure du projet
+
+```
+app/
+├── Http/Controllers/
+│   ├── AuthController.php      # Inscription, connexion, déconnexion
+│   └── TaskController.php      # CRUD tâches + filtres + statut rapide
+└── Models/
+    ├── User.php                 # hasMany Task
+    ├── Task.php                 # belongsTo User, belongsTo Category
+    └── Category.php             # hasMany Task
+
+database/
+├── migrations/                  # Toutes les tables via migrations Laravel
+└── seeders/
+    ├── CategorySeeder.php       # 5 catégories de base
+    └── DatabaseSeeder.php       # Utilisateur + tâches de test
+
+resources/views/
+├── layouts/
+│   └── app.blade.php            # Layout principal (@auth / @guest)
+├── auth/
+│   ├── login.blade.php
+│   └── register.blade.php
+└── tasks/
+    ├── index.blade.php          # Liste + filtres + compteur + pagination
+    ├── create.blade.php         # Formulaire création
+    └── edit.blade.php           # Formulaire modification
+
+routes/
+└── web.php                      # Toutes les routes nommées groupées sous middleware auth
+```
+
+---
+
+## 🗄️ Modèle de données
+
+```
+users
+  id, name, email, password, timestamps
+
+categories
+  id, name, timestamps
+
+tasks
+  id, title, description, status (todo|in_progress|done),
+  due_date, user_id (FK), category_id (FK), timestamps
+```
+
+**Relations Eloquent :**
+- `User` → `hasMany` → `Task`
+- `Task` → `belongsTo` → `User`
+- `Task` → `belongsTo` → `Category`
+- `Category` → `hasMany` → `Task`
+
+---
+
+## 🔒 Sécurité
+
+- Toutes les routes tâches protégées par `middleware('auth')`
+- Vérification de propriété avant chaque modification ou suppression :
+  ```php
+  if ($task->user_id !== auth()->id()) abort(403);
+  ```
+- `@csrf` présent sur tous les formulaires
+- Validation `$request->validate()` sur tous les inputs
+- `$fillable` défini dans chaque modèle (protection mass assignment)
+
+---
+
+## 🔍 Debugging
+
+### Laravel Debugbar
+Actif automatiquement si `APP_DEBUG=true` dans `.env`.
+Affiche en bas de page : requêtes SQL, temps d'exécution, mémoire utilisée.
+
+### Laravel Telescope
+Accessible sur : **http://localhost:8000/telescope**
+Permet de consulter chaque requête HTTP : payload, queries SQL associées, exceptions levées.
+
+---
+
+## 🧪 Commandes utiles
+
+```bash
+# Voir toutes les routes nommées
+php artisan route:list
+
+# Réinitialiser la base de données avec les seeders
+php artisan migrate:fresh --seed
+
+# Console interactive Laravel
+php artisan tinker
+
+# Vider le cache
+php artisan cache:clear
+php artisan config:clear
+```
+
+---
+
+## 🌿 Branches Git
+
+| Branche | Contenu |
+|---------|---------|
+| `main` | Code stable final |
+| `feature/auth` | Authentification (inscription / connexion) |
+| `feature/task-crud` | CRUD complet des tâches |
+| `feature/filters` | Filtrage par statut et catégorie |
+
+---
+
+## 👨‍💻 Auteur
+
+Projet réalisé dans le cadre de la formation **Développeur Web et Web Mobile (DWWM)**.
